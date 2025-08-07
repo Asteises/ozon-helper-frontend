@@ -40,7 +40,7 @@ const startPolling = () => {
   intervalId = window.setInterval(async () => {
     try {
       const response = await fetch('/api/product/sync/status', {
-        method: 'POST',
+        method: 'GET',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(payload)
       });
