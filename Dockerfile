@@ -15,4 +15,4 @@ RUN npm run build && ls -lah dist/
 FROM alpine:3.20 AS export
 
 WORKDIR /export
-COPY --from=builder /app/dist/ ./  # ✅ Обрати внимание на слеши!
+COPY --from=builder /app/dist/ ./
