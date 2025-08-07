@@ -30,12 +30,17 @@ const getData = async () => {
   loading.value = true;
 
   try {
+    console.log("initDataUnsafe: ", tg.initDataUnsafe)
     if (tg.initDataUnsafe?.user) {
+
       const user = tg.initDataUnsafe.user;
+
       const requestPayload: CheckUserData = {
         telegramUserId: user.id,
         telegramInitData: user?.initData
       }
+
+      console.log('Sent request for user: ', user.id)
 
       const response = await fetch('/api/product/sync/list', {
         method: 'POST',
