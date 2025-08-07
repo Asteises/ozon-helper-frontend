@@ -1,18 +1,18 @@
-# Stage 1: Base image с Node.js
-FROM node:20-alpine
+# Stage 1: Build
+FROM node:20-alpine AS builder
 
-# Устанавливаем рабочую директорию
 WORKDIR /app
 
-# Копируем package.json и устанавливаем зависимости
 COPY package*.json ./
 RUN npm ci
 
-# Копируем исходники
 COPY . .
 
-# Открываем порт, на котором будет слушать Vite
-EXPOSE 5173
+# Важно: явно указываем лог сборки
+RUN npm run build && ls -lah dist/
 
-# Запускаем Vite Dev Server
-CMD ["npm", "run", "dev"]
+# Stage 2: Export dist
+FROM alpine:3.20 AS export
+
+WORKDIR /export
+COPY --from=builder /app/dist/ ./  # ✅ Обрати внимание на слеши!

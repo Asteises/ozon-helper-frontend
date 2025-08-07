@@ -3,7 +3,7 @@ import vue from '@vitejs/plugin-vue'
 import path from 'path'
 
 export default defineConfig({
-  base: '/',
+  base: '/miniapp/', // важно для корректной генерации путей в /dist
   plugins: [vue()],
   resolve: {
     alias: {
@@ -13,13 +13,5 @@ export default defineConfig({
   build: {
     outDir: 'dist',
     emptyOutDir: true
-  },
-  server: {
-    port: 5173,
-    host: '0.0.0.0',
-    allowedHosts: ['asteises.ru'],
-    proxy: {
-      '/api': 'http://localhost:1212'
-    }
   }
 })
