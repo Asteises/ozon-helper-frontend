@@ -1,24 +1,18 @@
-# Stage 1: Build Vue app with Vite
-FROM node:20-alpine AS builder
+# Stage 1: Base image с Node.js
+FROM node:20-alpine
 
-# Создаём рабочую директорию
+# Устанавливаем рабочую директорию
 WORKDIR /app
 
-# Устанавливаем зависимости
+# Копируем package.json и устанавливаем зависимости
 COPY package*.json ./
 RUN npm ci
 
 # Копируем исходники
 COPY . .
 
-# Production build
-RUN npm run build
+# Открываем порт, на котором будет слушать Vite
+EXPOSE 5173
 
-# Stage 2: Export only built files
-FROM alpine:3.20 AS export
-
-# Создаём каталог для выгрузки в volume или bind mount
-WORKDIR /export
-
-# Копируем только готовую сборку из предыдущего этапа
-COPY --from=builder /app/dist ./
+# Запускаем Vite Dev Server
+CMD ["npm", "run", "dev"]
