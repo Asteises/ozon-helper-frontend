@@ -17,5 +17,5 @@ export interface RegisterUserData {
 
 export interface CheckUserData {
     telegramUserId: number;
-    telegramInitData: any;
+    telegramInitData?: any;
 }

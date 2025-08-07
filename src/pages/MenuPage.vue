@@ -24,7 +24,7 @@ declare global {
 
 const tg = window.Telegram?.WebApp;
 
-console.log("Income Telegram WebbApp: ", tg)
+console.log("Manu Page Income Telegram WebbApp: ", tg)
 
 const getData = async () => {
   loading.value = true;
@@ -34,7 +34,7 @@ const getData = async () => {
       const user = tg.initDataUnsafe.user;
       const requestPayload: CheckUserData = {
         telegramUserId: user.id,
-        telegramInitData: user.initData
+        telegramInitData: user?.initData
       }
 
       const response = await fetch('/api/product/sync/list', {
