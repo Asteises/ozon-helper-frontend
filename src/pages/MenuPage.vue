@@ -26,8 +26,10 @@ declare global {
 }
 
 const tg = window.Telegram?.WebApp;
+const taskId = crypto.randomUUID();
+console.log("Generate task id: ", taskId)
 
-console.log("Manu Page Income Telegram WebbApp: ", tg)
+console.log("Menu Page Income Telegram WebbApp: ", tg)
 
 async function getData() {
   loading.value = true;
@@ -40,16 +42,16 @@ async function getData() {
       return;
     }
 
-    const taskId = crypto.randomUUID();
     const requestPayload: RequestData = {
          telegramUserId: user.id,
              taskId: taskId
     }
 
     // 1) Сначала открываем stream
-    es = new EventSource(`/api/product/sync/stream?taskId=${encodeURIComponent(taskId)}`);
+    es = new EventSource(`/api/product/sync/stream?taskId=${taskId}`);
 
     es.addEventListener('connected', () => {
+      console.log("Event Listener connected success")
       // 2) Когда поток открыт — запускаем серверный процесс
       fetch('/api/product/sync/list', {
         method: 'POST',
